@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main class="mn-inner">
+    <h5 style="color: blue; padding-top: 10px; padding-left: 10px;">Visualizar Licença dos Funcionários</h5>
+    <div class="row">
+        <div class="middle-content">
+            <div class="row no-m-t no-m-b">
+
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+
+                <button class="btn btn-info" hx-get="{% url 'staff_leave_list' %}" hx-target="#leave-table-body" hx-trigger="click">
+                    Atualizar Tabela
+                </button>
+                
+                <table class="display responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do Funcionário</th>
+                            <th>Tipo de Licença</th>
+                            <th>Data de Início da Licença</th>
+                            <th>Data de Fim da Licença</th>
+                            <th>Mensagem</th>
+                            <th>Data da Solicitação</th>
+                            <th>Anexo</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody id="leave-table-body">
+                        {% include 'partials/staff_leave_table_body.html' %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

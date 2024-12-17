@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+
+<main class="mn-inner">
+    <h5 style="color: rgb(0, 0, 0); padding-top: 10px; padding-left: 10px;">Licenças dos Funcionários</h5>
+    <div class="row">
+        <div class="middle-content">
+            <div class="row no-m-t no-m-b">
+                
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'error' %}
+                    <div class="card-panel red lighten-4 red-text text-darken-4">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+                {% if messages %}
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                    <div class="card-panel green lighten-4 green-text text-darken-4">
+                        {{ message }}
+                    </div>
+                    {% endif %}
+                {% endfor %}
+                {% endif %}
+                
+                <table class="striped responsive-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome do Funcionário</th>
+                            <th>Tipo de Licença</th>
+                            <th>Data de Início da Licença</th>
+                            <th>Data de Fim da Licença</th>
+                            <th>Mensagem</th>
+                            <th>Data da Solicitação</th>
+                            <th>Anexo</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        {% for i in staff_leave %}
+                        <tr>
+                            <td>{{ i.id }}</td>
+                            <td>{{ i.staff_id.admin.first_name }} {{ i.staff_id.admin.last_name }}</td>
+                            <td>{{ i.leave_type }}</td>
+                            <td>{{ i.from_date }}</td>
+                            <td>{{ i.to_date }}</td>
+                            <td>{{ i.message }}</td>
+                            <td>{{ i.created_at }}</td>
+                            <td>
+                                {% if i.anexo %}
+                                <a class="btn modal-trigger blue" href="#modalAnexo{{ forloop.counter }}">Ver Anexo</a>
+
+                                <!-- Modal -->
+                                <div id="modalAnexo{{ forloop.counter }}" class="modal">
+                                    <div class="modal-content">
+                                        <!-- Botão Fechar com X -->
+                                        <a href="#!" class="modal-close btn red" style="position: absolute; top: 10px; right: 10px; font-size: 20px;">&times;</a>
+                                        <h5>Anexo</h5>
+                                        {% if i.anexo.url|lower|endswith:".pdf" %}
+                                            <object data="{{ i.anexo.url }}" type="application/pdf" width="100%" height="500px">
+                                                <p>Seu navegador não suporta a exibição de PDFs. <a href="{{ i.anexo.url }}" class="btn blue" target="_blank">Clique aqui para baixar o arquivo.</a></p>
+                                            </object>
+                                        {% elif i.anexo.url|lower|endswith:".jpg" or i.anexo.url|lower|endswith:".png" or i.anexo.url|lower|endswith:".jpeg" %}
+                                            <img src="{{ i.anexo.url }}" class="responsive-img" alt="Anexo">
+                                        {% else %}
+                                            <p>Este tipo de arquivo não pode ser exibido diretamente.</p>
+                                            <a href="{{ i.anexo.url }}" class="btn blue" target="_blank">Abrir Anexo em outra aba</a>
+                                        {% endif %}
+                                        <br>
+                                        <!-- Botão de download verde -->
+                                        <a href="{{ i.anexo.url }}" class="btn green" download>Baixar Anexo</a>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <!-- O botão de fechar foi removido da parte inferior -->
+                                    </div>
+                                </div>
+                                
+                                {% else %}
+                                Nenhum Anexo
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if i.status == 0 %}
+                                <a href="{% url 'staff_approve_leave' i.id %}" class="btn green">Aprovar</a>
+                                <a href="{% url 'staff_disapprove_leave' i.id %}" class="btn red">Reprovar</a>
+                                {% elif i.status == 1 %}
+                                <button class="btn green" disabled="disabled">Aprovado</button>
+                                {% else %}
+                                <button class="btn red" disabled="disabled">Reprovado</button>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Importação de Scripts do Materialize -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var modals = document.querySelectorAll('.modal');
+        M.Modal.init(modals);
+    });
+</script>
+
+{% endblock %}

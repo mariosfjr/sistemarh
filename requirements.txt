@@ -1,0 +1,15 @@
+Django>=5.1.2
+asgiref>=3.8.1
+pillow>=10.4.0
+requests>=2.32.3
+certifi>=2024.7.4
+charset-normalizer>=3.3.2
+idna>=3.8
+sqlparse>=0.5.1
+six>=1.16.0
+pytz>=2024.1
+python-dateutil>=2.9.0.post0
+whitenoise>=6.0.0 # Se precisar servir arquivos estáticos de forma eficiente
+psycopg2>=2.9.6 # (Se usar PostgreSQL no futuro, mas como usa SQLite, pode ser omitido)
+gunicorn>=20.1.0 # Para rodar a aplicação em produção
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    {% load static %}
+    <head>
+        
+        <!-- Título -->
+        <title>Sistema de gerenciamento de licenças de funcionários | Página de Login</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta charset="UTF-8">
+        <meta name="description" content="Template de Dashboard Admin Responsivo" />
+        <meta name="keywords" content="admin,dashboard" />
+        <meta name="author" content="Steelcoders" />
+        
+        <!-- Estilos -->
+        <link type="text/css" rel="stylesheet" href="{% static 'assets/plugins/materialize/css/materialize.min.css' %}"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{% static 'assets/plugins/material-preloader/css/materialPreloader.min.css' %}" rel="stylesheet">        
+        <link href="{% static 'assets/css/alpha.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"/>
+        <style>
+            .h4 {
+                color: white;
+                text-align: center;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body class="signin-page">
+
+        <div class="mn-content valign-wrapper">
+
+            <main class="mn-inner container">
+                <h4 class="h4">Sistema de Gerenciamento de Licenças</h4>
+                <div class="valign">
+                    <div class="row">
+
+                        <div class="col s12 m6 l4 offset-l4 offset-m3">
+                            <div class="card white darken-1">
+                                <div class="card-content ">
+
+                                    <div class="row">
+
+                                        <div class="col s6 right-align m-t-sm">
+                                            <a href="{% url 'login' %}"> <button class="waves-effect waves-light btn teal">Funcionário</button></a>
+                                        </div>
+                                        <div class="col s6 right-align m-t-sm">
+                                            <a href="{% url 'login' %}"> <button class="waves-effect waves-light btn teal">Administrador</button></a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Javascript -->
+        <script src="{% static 'assets/plugins/jquery/jquery-2.2.0.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/materialize/js/materialize.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/material-preloader/js/materialPreloader.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/jquery-blockui/jquery.blockui.js' %}"></script>
+        <script src="{% static 'assets/js/alpha.min.js' %}"></script>
+        
+    </body>
+</html>

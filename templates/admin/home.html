@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="middle-content">
+    <!-- Cabeçalho de boas-vindas -->
+    <div class="row no-m-t no-m-b">
+        <h5 style="color: rgb(0, 0, 0);">Bem-Vindo, {{ user.first_name }} {{ user.last_name }}!</h5>
+
+        <!-- Carregamento dinâmico dos horários de funcionamento -->
+        <div id="business-hours" 
+             hx-get="/business-hours" 
+             hx-trigger="load, every 1s" 
+             hx-target="#business-hours">
+            Carregando Horário...
+        </div>
+
+        <!-- Card com a contagem de funcionários registrados -->
+        <div class="col s12 m12 l4">
+            <div class="card stats-card">
+                <div class="card-content">
+                    <span class="card-title">Funcionários Registrados</span>
+                    <span class="stats-counter">
+                        <a href="{% url 'view_staff' %}">
+                            <span class="counter">{{ staff_count }}</span>
+                        </a>
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card com a contagem de licenças requeridas -->
+        <div class="col s12 m12 l4">
+            <div class="card stats-card">
+                <div class="card-content">
+                    <span class="card-title">Licenças Requeridas</span>
+                    <a href="{% url 'staff_leave_view_admin' %}">
+                        <span class="stats-counter">
+                            <span class="counter">{{ leave_count }}</span>
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção do gráfico -->
+    <div class="row no-m-t" style="width: 66%; margin: 0 auto; float: left;">
+        <div class="col s12">
+            <div class="card stats-card">
+                <div class="card-content">
+                    <span class="card-title">Resumo de Funcionários e Licenças</span>
+                    <!-- Canvas para o gráfico -->
+                    <canvas id="summary-chart" style="width: 80%; height: 300px; margin: 0 auto;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var ctx = document.getElementById('summary-chart').getContext('2d');
+        
+        // Dados passados do Django
+        var staffCount = {{ staff_count }};
+        var leaveCount = {{ leave_count }};
+        
+        // Criando o gráfico
+        var summaryChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Funcionários Registrados', 'Licenças Requeridas'],
+                datasets: [{
+                    label: 'Quantidade',
+                    data: [staffCount, leaveCount], // Dados reais
+                    backgroundColor: ['rgba(75, 192, 192, 0.2)', 'rgba(255, 99, 132, 0.2)'],
+                    borderColor: ['rgba(75, 192, 192, 1)', 'rgba(255, 99, 132, 1)'],
+                    borderWidth: 1,
+                    barThickness: 40 // Ajusta a largura das barras
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    },
+                    x: {
+                        grid: {
+                            display: false // Esconde a grade no eixo X
+                        }
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false // Esconde a legenda
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

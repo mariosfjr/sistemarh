@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<main class="mn-inner">
+    <h5 style="color: blue; padding-top: 10px; padding-left: 10px;">Solicitar Licença</h5>
+    <div class="row">
+        <div class="middle-content">
+            <div class="row no-m-t no-m-b">
+
+                <!-- Formulário de solicitação de licença -->
+                <form method="POST" action="{% url 'staff_apply_leave_save' %}" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    
+                    <!-- Exibição de mensagens -->
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <!-- Tipo de licença -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Tipo de Licença</label>
+                        <div class="col-sm-10">
+                            <select class="form-control" name="leave_type" required>
+                                <option value="">Escolha o Tipo de Licença</option>
+                                <option value="Licença Casual">Licença Casual</option>
+                                <option value="Licença Conquistada">Férias</option>
+                                <option value="Licença Médica">Licença Médica</option>
+                                <option value="Licença Maternidade">Licença Maternidade</option>
+                                <option value="Licença Paternidade">Licença Paternidade</option>
+                                <option value="Licença Luto">Licença para Luto</option>
+                                <option value="Licença Casamento">Licença para Casamento</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <!-- Data de início -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Data de Início</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" name="from_date" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Data de fim -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Data de Fim</label>
+                        <div class="col-sm-10">
+                            <input type="date" class="form-control" name="to_date" required>
+                        </div>
+                    </div>
+                    
+                    <!-- Mensagem -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Mensagens</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" name="message" required rows="5" cols="5"></textarea>
+                        </div>
+                    </div>
+                    
+                    <!-- Upload de anexo -->
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Anexo</label>
+                        <div class="col-sm-10">
+                            <input type="file" class="form-control" name="anexo" accept=".jpg,.jpeg,.png,.pdf,.doc,.docx">
+                        </div>
+                    </div>
+                    
+                    <!-- Botão de envio -->
+                    <div class="form-group row">
+                        <div class="col-sm-10">
+                            <button type="submit" class="btn btn-dark">Solicitar Licença</button>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}

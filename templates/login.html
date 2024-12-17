@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    {% load static %}
+    <head>
+        
+        <!-- Título -->
+        <title>Sistema de gerenciamento de faltas de funcionários | Página de Login</title>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+        <meta charset="UTF-8">
+        <meta name="description" content="Modelo de Painel de Administração Responsivo" />
+        <meta name="keywords" content="admin,painel" />
+        <meta name="author" content="Steelcoders" />
+        
+        <!-- Estilos -->
+        <link type="text/css" rel="stylesheet" href="{% static 'assets/plugins/materialize/css/materialize.min.css' %}"/>
+        <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="{% static 'assets/plugins/material-preloader/css/materialPreloader.min.css' %}" rel="stylesheet">        
+        <link href="{% static 'assets/css/alpha.min.css' %}" rel="stylesheet" type="text/css"/>
+        <link href="{% static 'assets/css/custom.css' %}" rel="stylesheet" type="text/css"/>
+    </head>
+    <body class="signin-page">
+
+        <div class="mn-content valign-wrapper">
+
+            <main class="mn-inner container">
+                <h4 align="center"><a href="../index.php" style="color: white;">Sistema de Gerenciamento de Licenças | Página de Login</a></h4>
+                <div class="valign">
+                      <div class="row">
+
+                          <div class="col s12 m6 l4 offset-l4 offset-m3">
+                              <div class="card white darken-1">
+                                  <div class="card-content ">
+                                      <span class="card-title">Entrar</span>
+                                       <div class="row">
+                                        {% if messages %}
+                                 {% for message in messages %}
+                                  {% if message.tags == 'error' %}
+                                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                               {{message}}
+                              <button type="button" class="close" data-dismiss="alert" aria-label="Fechar">
+                              <span aria-hidden="true">&times;</span>
+                                  </button>
+                                   </div>
+                                {% endif %}
+                                 {% endfor %}
+                                {% endif %}
+                                           <form class="col s12" action="{% url 'doLogin' %}" method="POST">
+                                            {% csrf_token %}
+                                               <div class="input-field col s12">
+                                                   <input id="username" type="email" name="email" class="validate" required="true" >
+                                                   <label for="email">Email</label>
+                                               </div>
+                                               <div class="input-field col s12">
+                                                   <input id="password" type="password" class="validate" name="password" required="true">
+                                                   <label for="password">Senha</label>
+                                               </div>
+                                               <div class="col s6 right-align m-t-sm">
+                                                <a href="{% url 'firstpage' %}" class="waves-effect waves-light btn teal">Voltar</a>
+                                             </div>
+                                               <div class="col s6 right-align m-t-sm">
+                                                 
+                                                   <button class="waves-effect waves-light btn teal">Entrar</button>
+                                               </div>
+                                           </form>
+                                       
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Javascript -->
+        <script src="{% static 'assets/plugins/jquery/jquery-2.2.0.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/materialize/js/materialize.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/material-preloader/js/materialPreloader.min.js' %}"></script>
+        <script src="{% static 'assets/plugins/jquery-blockui/jquery.blockui.js' %}"></script>
+        <script src="{% static 'assets/js/alpha.min.js' %}"></script>
+        
+    </body>
+</html>
